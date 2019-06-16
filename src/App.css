@@ -1,52 +1,187 @@
-*{
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+ 
+.app-title {
+    color: rgb(27, 52, 102);
+}
+ 
+.app-wrapper {
+    width: 90%;
+    margin: 5vh auto 0;
+    /* text-align: center; */
+}
+ 
+.user-form__fieldName {
+    margin-top: 15px;
+    color: #777777;
+}
+ 
+.user-form__input {
+    width: 40%;
+    border: none;
+    margin: 10px 0;
+    border-bottom: #777777 1px solid;
+    transition: .3s;
+}
+ 
+.user-form__input:focus {
+    font-size: 20px;
+    outline-width: 0;
+    outline-color: red;
+}
+ 
+.user-form__input::placeholder {
+    color: #555555;
+}
+ 
+.user-form__valid-msg {
+    margin-left: 10px;
+    border-radius: 10px;
+    background-color: rgba(240, 128, 128, 0.692);
+    color: red;
+}
+ 
+.user-form__btn {
+    margin-top: 20px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    background-color: rgb(0, 225, 187);
+    color: white;
+    font-weight: 700;
+}
+ 
+.user-form__btn--add-user {
+    display: inline-block;
+}
+ 
+.user-form__btn--add-user:disabled {
+    background-color: lightgrey;
+}
+ 
+.user-form__btn--add-user:disabled:hover {
+    cursor: not-allowed;
+}
+ 
+.user-form__btn:hover {
+    cursor: pointer;
+}
+ 
+.user-form__btn--delete-users-list, .modal__btn--close-modal {
+    background-color: red;
+    margin-left: 20px;
+    top: 0;
+    right: 0;
+}
+ 
+.user-form__modal-bg {
+    position: fixed;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0, .3);
+}
+ 
+.user-form__modal-confirm {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 30px 20px;
+    border: 1px solid #888;
+    width: 50%;
+    text-align: center;
+}
+ 
+.users-list {
+    margin: 10px auto;
+    list-style: none;
+}
+ 
+.users-list__btn--remove-user {
+    cursor: pointer;
+    display: inline;
+    margin: 0 auto;
+    color: rgb(141, 159, 196);
+    background-color: rgb(246, 250, 255);
+    padding: 7px 10px;
+    border: none;
+    border-radius: 50%;
+}
+ 
+.table {
+    width: 100%;
+    text-align: left;
+}
+ 
+.table__head {
+    background-color: rgb(246, 250, 255);
+}
+ 
+.table__head-col-name {
+    cursor: pointer;
+    width: 30%;
+}
+ 
+.table__head-col-IP {
+    width: 30%;
+}
+ 
+.ip {
+    display: inline;
+}
+RAW Paste Data
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.app-title{
+.app-title {
     color: rgb(27, 52, 102);
 }
 
-.app-wrapper{
+.app-wrapper {
     width: 90%;
     margin: 5vh auto 0;
     /* text-align: center; */
 }
 
-.user-form__fieldName{
-    margin-top: 15px; 
+.user-form__fieldName {
+    margin-top: 15px;
     color: #777777;
 }
 
-.user-form__input{
+.user-form__input {
     width: 40%;
     border: none;
     margin: 10px 0;
-    /* padding-bottom: 5px; */
     border-bottom: #777777 1px solid;
     transition: .3s;
 }
 
-.user-form__input:focus{
+.user-form__input:focus {
     font-size: 20px;
     outline-width: 0;
     outline-color: red;
 }
 
-.user-form__input::placeholder{
+.user-form__input::placeholder {
     color: #555555;
 }
 
-.user-form__valid-msg{
-    /* display: inline; */
-    margin-left: 10px; 
+.user-form__valid-msg {
+    margin-left: 10px;
     border-radius: 10px;
     background-color: rgba(240, 128, 128, 0.692);
     color: red;
 }
 
-.user-form__btn{
+.user-form__btn {
     margin-top: 20px;
     padding: 10px 15px;
     border: none;
@@ -56,33 +191,41 @@
     font-weight: 700;
 }
 
-.user-form__btn--add-user{
+.user-form__btn--add-user {
     display: inline-block;
 }
 
-.user-form__btn:hover{
+.user-form__btn--add-user:disabled {
+    background-color: lightgrey;
+}
+
+.user-form__btn--add-user:disabled:hover {
+    cursor: not-allowed;
+}
+
+.user-form__btn:hover {
     cursor: pointer;
 }
 
-.user-form__btn--delete-users-list, .modal__btn--close-modal{
+.user-form__btn--delete-users-list, .modal__btn--close-modal {
     background-color: red;
-    margin-left: 20px ;
+    margin-left: 20px;
     top: 0;
     right: 0;
 }
 
-.user-form__modal-bg{
-    position: fixed; 
+.user-form__modal-bg {
+    position: fixed;
     padding-top: 100px;
     left: 0;
     top: 0;
-    width: 100%; 
+    width: 100%;
     height: 100%;
-    overflow: auto; 
-    background-color: rgb(0,0,0,.3);
+    overflow: auto;
+    background-color: rgb(0, 0, 0, .3);
 }
 
-.user-form__modal-confirm{
+.user-form__modal-confirm {
     background-color: #fefefe;
     margin: auto;
     padding: 30px 20px;
@@ -91,15 +234,14 @@
     text-align: center;
 }
 
-.users-list{
+.users-list {
     margin: 10px auto;
     list-style: none;
 }
 
-.users-list__btn--remove-user{
+.users-list__btn--remove-user {
     cursor: pointer;
     display: inline;
-    width: auto;
     margin: 0 auto;
     color: rgb(141, 159, 196);
     background-color: rgb(246, 250, 255);
@@ -108,29 +250,24 @@
     border-radius: 50%;
 }
 
-.table{
+.table {
     width: 100%;
     text-align: left;
 }
 
-.table__head{
+.table__head {
     background-color: rgb(246, 250, 255);
 }
 
-.table__head-col-name{
+.table__head-col-name {
     cursor: pointer;
     width: 30%;
-
 }
 
-.table__head-col-IP{
+.table__head-col-IP {
     width: 30%;
 }
 
-.table__body{
-    /* text-align: center; */
-}
-
-.ip{
+.ip {
     display: inline;
 }

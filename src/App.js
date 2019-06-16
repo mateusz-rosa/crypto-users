@@ -3,9 +3,9 @@ import { Table } from 'reactstrap'
 import PropTypes from 'prop-types'
 import validator from 'validator';
 import './App.css';
-
+ 
 class App extends Component {
-
+ 
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
@@ -19,7 +19,7 @@ class App extends Component {
       email: false,
       ip: false
     };
-
+ 
     Table.propTypes = {
       tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
       size: PropTypes.string,
@@ -35,78 +35,84 @@ class App extends Component {
         PropTypes.object
       ])
     };
-
+ 
   }
-
+ 
   componentDidMount() {
     this.refs.userNickname.focus();
     this.validate();
     this.refs.deleteListBtn.hidden = true;
     this.refs.confirmModal.hidden = true;
   }
-
+ 
+  invalidate(){
+    this.validationState = {
+      email: false,
+      ip: false
+    };
+    this.validate();
+  }
+ 
   validate() {
     const btn = this.refs.btn;
     btn.disabled = !(this.validationState.email && this.validationState.ip);
   }
-
+ 
   validateEmail() {
     let email = this.refs.userEmail ? this.refs.userEmail.value : '';
     let userEmailValidationMessage = this.refs.userEmailValidationMessage;
     userEmailValidationMessage.innerText = (email !== '' && !validator.isEmail(email))
       ? ' Your email is incorrect!'
       : '';
-
+ 
     this.validationState.email = validator.isEmail(email);
     this.validate();
   }
-
+ 
   validateIP() {
     let ip = this.refs.userIp ? this.refs.userIp.value : '';
     let userIpValidationMessage = this.refs.userIpValidationMessage;
-
+ 
     userIpValidationMessage.innerText = (ip !== '' && !validator.isIP(ip))
       ? ' Your IP Address is incorrect! '
       : '';
-
+ 
     this.validationState.ip = validator.isIP(ip);
     this.validate();
   }
-
+ 
   onChange(e) {
     this.setState({
       nickname: e.target.value
     });
   }
-
+ 
   validateUser(userNickname, userEmail, data) {
     for (const nickname in data) {
-      if (data.hasOwnProperty(nickname)) {
+      if (!!data[nickname]) {
         if (userNickname === data[nickname].name) {
           return 'User with this NICKNAME already exist!'
         }
       }
     }
     for (const email in data) {
-      if (data.hasOwnProperty(email)) {
+      if (!!data[email]) {
         if (userEmail === data[email].email) return 'User with this EMAIL already exist!';
       }
     }
-    if(userNickname==='') return 'empty NICKNAME field!'; 
-    if(userEmail==='') return 'empty EMAIL field!';
     return '';
   }
-
+ 
   removeUsersList(e) {
     this.refs.confirmModal.hidden = false;
     e.preventDefault();
   }
-
+ 
   hiddenModal(e) {
     this.refs.confirmModal.hidden = true;
     e.preventDefault();
   }
-
+ 
   removeUsersListApproved(e) {
     e.preventDefault();
     let data = this.state.data;
@@ -117,17 +123,17 @@ class App extends Component {
     this.refs.confirmModal.hidden = true;
     this.checkUsersState(data);
   }
-
+ 
   checkUsersState(data) {
     if (data.length === 0) {
       this.refs.deleteListBtn.hidden = true;
     }
   }
-
+ 
   compareName(a, b) {
     const nameA = a.name.toUpperCase();
     const nameB = b.name.toUpperCase();
-
+ 
     let comparison = 0;
     if (nameA > nameB) {
       comparison = 1;
@@ -136,11 +142,11 @@ class App extends Component {
     }
     return comparison;
   }
-
+ 
   compareEmail(a, b) {
     const emailA = a.email.toUpperCase();
     const emailB = b.email.toUpperCase();
-
+ 
     let comparison = 0;
     if (emailA > emailB) {
       comparison = 1;
@@ -149,11 +155,11 @@ class App extends Component {
     }
     return comparison;
   }
-
+ 
   compareIpAddress(a, b) {
     const ipA = a.ip.toUpperCase();
     const ipB = b.ip.toUpperCase();
-
+ 
     let comparison = 0;
     if (ipA > ipB) {
       comparison = 1;
@@ -162,37 +168,38 @@ class App extends Component {
     }
     return comparison;
   }
-
+ 
   compareSortName() {
     this.state.data.sort(this.compareName);
     this.setState({
       data: this.state.data
     });
   }
-
+ 
   compareSortEmail() {
     this.state.data.sort(this.compareEmail);
     this.setState({
       data: this.state.data
     });
   }
-
+ 
   compareSortIpAddress() {
     this.state.data.sort(this.compareIpAddress);
     this.setState({
       data: this.state.data
     });
   }
-
+ 
   addUser(e) {
     e.preventDefault();
+    console.log('jolo: ');
     let name = this.refs.userNickname.value;
     let email = this.refs.userEmail.value;
     let ip = this.refs.userIp.value;
     let data = this.state.data;
     let dataset = {
       name, email, ip
-    }
+    };
     let userValid = this.validateUser(name, email, data);
     if (userValid === '') {
       data.push(dataset);
@@ -207,12 +214,13 @@ class App extends Component {
       alert(userValid);
     }
   }
-
+ 
   clearForm() {
     this.refs.userForm.reset();
     this.refs.userNickname.focus();
+    this.invalidate();
   }
-
+ 
   removeUser = (i) => {
     let data = this.state.data;
     data.splice(i, 1);
@@ -222,7 +230,7 @@ class App extends Component {
     this.clearForm();
     this.checkUsersState(data);
   }
-
+ 
   render() {
     let data = this.state.data;
     return (
@@ -273,5 +281,6 @@ class App extends Component {
     )
   };
 }
-
+ 
 export default App;
+
