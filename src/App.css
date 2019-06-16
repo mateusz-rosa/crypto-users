@@ -1,0 +1,92 @@
+*{
+    margin: 0;
+    padding: 0;
+    /* box-sizing: border-box; */
+}
+
+.app-title{
+    color: rgb(27, 52, 102);
+}
+
+.app-wrapper{
+    width: 90%;
+    margin: 5vh auto 0;
+    /* text-align: center; */
+}
+
+.user-form__fieldName{
+    margin-top: 15px; 
+    color: #777777;
+}
+
+.user-form__input{
+    width: 40%;
+    border: none;
+    /* padding-bottom: 5px; */
+    border-bottom: #777777 1px solid;
+    transition: .3s;
+}
+
+.user-form__input:focus{
+    font-size: 20px;
+    outline-width: 0;
+    outline-color: red;
+}
+
+.user-form__input::placeholder{
+    color: #555555;
+}
+
+.user-form__btn{
+    margin-top: 20px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    background-color: rgb(0, 225, 187);
+    color: white;
+    font-weight: 700;
+}
+
+.user-form__btn:hover{
+    cursor: pointer;
+}
+
+.user-form__btn--delete-users-list, .modal__btn--close-modal{
+    background-color: red;
+    margin-left: 20px ;
+    top: 0;
+    right: 0;
+}
+
+.user-form__modal-bg{
+    position: fixed; 
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto; 
+    background-color: rgb(0,0,0,.3);
+}
+
+.user-form__modal-confirm{
+    background-color: #fefefe;
+    margin: auto;
+    padding: 30px 20px;
+    border: 1px solid #888;
+    width: 50%;
+    text-align: center;
+}
+
+.users-list{
+    margin: 10px auto;
+    list-style: none;
+}
+
+.users-list__btn--remove-user{
+    color: rgb(141, 159, 196);
+    background-color: rgb(246, 250, 255);
+    padding: 7px 10px;
+    border: none;
+    border-radius: 50%;
+}
