@@ -22,6 +22,7 @@
 .user-form__input{
     width: 40%;
     border: none;
+    margin: 10px 0;
     /* padding-bottom: 5px; */
     border-bottom: #777777 1px solid;
     transition: .3s;
@@ -37,6 +38,14 @@
     color: #555555;
 }
 
+.user-form__valid-msg{
+    /* display: inline; */
+    margin-left: 10px; 
+    border-radius: 10px;
+    background-color: rgba(240, 128, 128, 0.692);
+    color: red;
+}
+
 .user-form__btn{
     margin-top: 20px;
     padding: 10px 15px;
@@ -45,6 +54,10 @@
     background-color: rgb(0, 225, 187);
     color: white;
     font-weight: 700;
+}
+
+.user-form__btn--add-user{
+    display: inline-block;
 }
 
 .user-form__btn:hover{
@@ -84,9 +97,40 @@
 }
 
 .users-list__btn--remove-user{
+    cursor: pointer;
+    display: inline;
+    width: auto;
+    margin: 0 auto;
     color: rgb(141, 159, 196);
     background-color: rgb(246, 250, 255);
     padding: 7px 10px;
     border: none;
     border-radius: 50%;
+}
+
+.table{
+    width: 100%;
+    text-align: left;
+}
+
+.table__head{
+    background-color: rgb(246, 250, 255);
+}
+
+.table__head-col-name{
+    cursor: pointer;
+    width: 30%;
+
+}
+
+.table__head-col-IP{
+    width: 30%;
+}
+
+.table__body{
+    /* text-align: center; */
+}
+
+.ip{
+    display: inline;
 }

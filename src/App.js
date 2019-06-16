@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Table } from 'reactstrap'
+import PropTypes from 'prop-types'
 import validator from 'validator';
 import './App.css';
 
@@ -17,6 +19,23 @@ class App extends Component {
       email: false,
       ip: false
     };
+
+    Table.propTypes = {
+      tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+      size: PropTypes.string,
+      bordered: PropTypes.bool,
+      borderless: PropTypes.bool,
+      striped: PropTypes.bool,
+      dark: PropTypes.bool,
+      hover: PropTypes.bool,
+      responsive: PropTypes.bool,
+      innerRef: PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.string,
+        PropTypes.object
+      ])
+    };
+
   }
 
   componentDidMount() {
@@ -24,8 +43,6 @@ class App extends Component {
     this.validate();
     this.refs.deleteListBtn.hidden = true;
     this.refs.confirmModal.hidden = true;
-    console.log(this.refs.deleteListBtn.hidden)
-
   }
 
   validate() {
@@ -37,7 +54,7 @@ class App extends Component {
     let email = this.refs.userEmail ? this.refs.userEmail.value : '';
     let userEmailValidationMessage = this.refs.userEmailValidationMessage;
     userEmailValidationMessage.innerText = (email !== '' && !validator.isEmail(email))
-      ? 'Your email is incorrect!'
+      ? ' Your email is incorrect!'
       : '';
 
     this.validationState.email = validator.isEmail(email);
@@ -49,7 +66,7 @@ class App extends Component {
     let userIpValidationMessage = this.refs.userIpValidationMessage;
 
     userIpValidationMessage.innerText = (ip !== '' && !validator.isIP(ip))
-      ? 'Your IP Address is incorrect!'
+      ? ' Your IP Address is incorrect! '
       : '';
 
     this.validationState.ip = validator.isIP(ip);
@@ -57,23 +74,26 @@ class App extends Component {
   }
 
   onChange(e) {
-    this.setState({ nickname: e.target.value });
+    this.setState({
+      nickname: e.target.value
+    });
   }
 
   validateUser(userNickname, userEmail, data) {
-    console.log('validateUSER!!')
     for (const nickname in data) {
       if (data.hasOwnProperty(nickname)) {
         if (userNickname === data[nickname].name) {
-          return "NICKNAME";
+          return 'User with this NICKNAME already exist!'
         }
       }
     }
     for (const email in data) {
       if (data.hasOwnProperty(email)) {
-        if (userEmail === data[email].email) return "EMAIL";
+        if (userEmail === data[email].email) return 'User with this EMAIL already exist!';
       }
     }
+    if(userNickname==='') return 'empty NICKNAME field!'; 
+    if(userEmail==='') return 'empty EMAIL field!';
     return '';
   }
 
@@ -96,7 +116,6 @@ class App extends Component {
     });
     this.refs.confirmModal.hidden = true;
     this.checkUsersState(data);
-    // this.refs.deleteListBtn.hidden = true;
   }
 
   checkUsersState(data) {
@@ -144,6 +163,27 @@ class App extends Component {
     return comparison;
   }
 
+  compareSortName() {
+    this.state.data.sort(this.compareName);
+    this.setState({
+      data: this.state.data
+    });
+  }
+
+  compareSortEmail() {
+    this.state.data.sort(this.compareEmail);
+    this.setState({
+      data: this.state.data
+    });
+  }
+
+  compareSortIpAddress() {
+    this.state.data.sort(this.compareIpAddress);
+    this.setState({
+      data: this.state.data
+    });
+  }
+
   addUser(e) {
     e.preventDefault();
     let name = this.refs.userNickname.value;
@@ -160,14 +200,12 @@ class App extends Component {
       this.setState({
         data: data
       });
-      console.log("DODANO USERA");
       this.clearForm();
       this.refs.deleteListBtn.hidden = false;
       return true;
     } else {
-      alert('User with this ' + userValid + ' already exist!');
+      alert(userValid);
     }
-
   }
 
   clearForm() {
@@ -183,7 +221,6 @@ class App extends Component {
     });
     this.clearForm();
     this.checkUsersState(data);
-    console.log('removaUser()')
   }
 
   render() {
@@ -194,31 +231,44 @@ class App extends Component {
         <form ref="userForm" className="user-form">
           <p className="user-form__field-name">Nickname</p>
           <input ref="userNickname" className="user-form__input" placeholder="your nickname" onChange={this.onChange}></input><br />
-          <p className="user-form__field-name">Email</p>          
+          <p className="user-form__field-name">Email</p>
           <input onKeyUp={() => this.validateEmail()} ref="userEmail" className="user-form__input" placeholder="your email" type="text"></input>
-          <span ref="userEmailValidationMessage"></span><br />
-          <p className="user-form__field-name">IP address</p>          
+          <span className="user-form__valid-msg" ref="userEmailValidationMessage"></span>
+          <p className="user-form__field-name">IP address</p>
           <input onKeyUp={() => this.validateIP()} ref="userIp" className="user-form__input" placeholder="your IP address" type="text"></input>
-          <span ref="userIpValidationMessage"></span><br />
+          <span className="user-form__valid-msg" ref="userIpValidationMessage"></span>
+          <div className="user-form__buttons">
           <button ref="btn" onClick={(e) => this.addUser(e)} className="user-form__btn user-form__btn--add-user">Add User</button>
           <button ref="deleteListBtn" onClick={(e) => this.removeUsersList(e)} className="user-form__btn user-form__btn--delete-users-list">Delete List</button>
-          <div ref="confirmModal" className="user-form__modal-bg">
-          <div className="user-form__modal-confirm">
-            <p className="modal-confirm__delete-warning">Delete all users - are you sure?</p>
-            <button ref="removeListConfirmBtn" onClick={(e) => this.removeUsersListApproved(e)} className="user-form__btn modal-confirm__btn--delete-confirm">YES</button>
-            <button ref="removeListCancelBtn" onClick={(e) => this.hiddenModal(e)} className="user-form__btn modal__btn--close-modal">NO</button>
           </div>
+          <div ref="confirmModal" className="user-form__modal-bg">
+            <div className="user-form__modal-confirm">
+              <p className="modal-confirm__delete-warning">Delete all users - are you sure?</p>
+              <button ref="removeListConfirmBtn" onClick={(e) => this.removeUsersListApproved(e)} className="user-form__btn modal-confirm__btn--delete-confirm">YES</button>
+              <button ref="removeListCancelBtn" onClick={(e) => this.hiddenModal(e)} className="user-form__btn modal__btn--close-modal">NO</button>
+            </div>
           </div>
         </form>
-        <ul>
-          {
-            data.map((dataset, i) =>
-              <li key={i} className="users-list">
-                {i + 1}. {dataset.name}, {dataset.email}, {dataset.ip}
-                <button onClick={() => this.removeUser(i)} className="users-list__btn--remove-user">&#10006;</button>
-              </li>
-            )}
-        </ul>
+        <Table className="table">
+          <thead className="table__head">
+            <tr >
+              <th onClick={() => this.compareSortName()} className="table__head-col-name">Nickname</th>
+              <th onClick={() => this.compareSortEmail()} className="table__head-col-name">Email</th>
+              <th onClick={() => this.compareSortIpAddress()} className="table__head-col-name">IP Address</th>
+            </tr>
+          </thead>
+          <tbody className="table__body">
+            {
+              data.map((dataset, i) =>
+                <tr key={i} className="users-list">
+                  <td><p > {dataset.name}</p></td>
+                  <td><p> {dataset.email}</p></td>
+                  <td><p > {dataset.ip} </p>
+                    <button onClick={() => this.removeUser(i)} className="users-list__btn--remove-user">&#10006;</button></td>
+                </tr>
+              )}
+          </tbody>
+        </Table>
       </div>
     )
   };
